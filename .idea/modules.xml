@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/PtoGestoFoto.iml" filepath="$PROJECT_DIR$/PtoGestoFoto.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/camera2basics/camera2basics.iml" filepath="$PROJECT_DIR$/camera2basics/camera2basics.iml" />
     </modules>
   </component>
 </project>

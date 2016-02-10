@@ -18,6 +18,7 @@ package com.nieves.ptogestofoto;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 /**
  * Created by Nieves on 08/02/2016.
@@ -26,6 +27,7 @@ import android.content.SharedPreferences;
 public class Utility {
     private static final String PREFERENCES_LOCK_PATTERN = "PreferencesLockPattern";
     private static final String KEY_LOCK_PATTERN = "KeyLockPattern";
+    private static final String TAG = Utility.class.getSimpleName();
     private static boolean almacenado;
 
     /**
@@ -54,7 +56,9 @@ public class Utility {
     }
 
     public static boolean isPatternSetted(Context context) {
+        Log.d(TAG, "Comprobando patron:");
         SharedPreferences sp = context.getSharedPreferences(PREFERENCES_LOCK_PATTERN, Context.MODE_PRIVATE);
+        Log.d(TAG, sp != null ? "Ya hay un patron" : "No hay patron");
         return sp != null;
     }
 }

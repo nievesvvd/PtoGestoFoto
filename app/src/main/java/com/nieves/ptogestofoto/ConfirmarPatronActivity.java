@@ -17,6 +17,9 @@ package com.nieves.ptogestofoto;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
+
+import com.nieves.camera2basics.CameraActivity;
 
 import java.util.List;
 
@@ -28,6 +31,20 @@ import me.zhanghai.android.patternlock.PatternView;
  * Clase con la que comprobamos que el patron establecido sea correcto
  */
 public class ConfirmarPatronActivity extends me.zhanghai.android.patternlock.ConfirmPatternActivity {
+
+    private static final String TAG = ConfirmarPatronActivity.class.getSimpleName();
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (!Utility.isPatternSetted(this)) {
+            Intent i = new Intent(this, EstablecerPatronActivity.class);
+            startActivity(i);
+        } else {
+            Log.d(TAG, "Patrón ya seteado");
+        }
+    }
+
     /**
      * Metodo en el que comprobamos que el patron introducido por el usuario es correcto
      *
@@ -47,9 +64,11 @@ public class ConfirmarPatronActivity extends me.zhanghai.android.patternlock.Con
      */
     @Override
     protected void onConfirmed() {
+        Log.d(TAG, "Patrón ya seteado");
         super.onConfirmed();
         //Llamamos al acivity de la camara
-        Intent i = new Intent(this, TomarFotoActivity.class);
+        Intent i = new Intent(this, CameraActivity.class);
+//        Intent i = new Intent(this, TomarFotoActivity.class);
         startActivity(i);
     }
 
@@ -61,5 +80,11 @@ public class ConfirmarPatronActivity extends me.zhanghai.android.patternlock.Con
         super.onForgotPassword();
         Intent i = new Intent(this, EstablecerPatronActivity.class);
         startActivity(i);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
     }
 }

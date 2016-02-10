@@ -15,133 +15,33 @@
  */
 package com.nieves.ptogestofoto;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.ImageView;
+import android.util.Log;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.nieves.camera2basics.Camera2BasicFragment;
 
 public class TomarFotoActivity extends AppCompatActivity {
-    private ImageView img;
-    private Intent camera = new Intent();
-    private int count = 3;
-    private File image;
-    private static final int PETICION = 1;
+    private static final String TAG = TomarFotoActivity.class.getSimpleName();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
+        Log.d(TAG, "Hasta aquí hemos llegdo");
+        super.onCreate(savedInstanceState, persistentState);
         setContentView(R.layout.activity_tomar_foto);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        img = (ImageView) this.findViewById(R.id.imageView1);
-
-        tomarFoto();
-
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        getFragmentManager().beginTransaction()
+                .replace(R.id.frame_camera, Camera2BasicFragment.newInstance(), "frame_camera")
+                .commit();
     }
-
-    /**
-     * Metodo desde el que llamamos a la camara para tomar la foto
-     */
-    public void tomarFoto() {
-        camera = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        //creamos una carpeta donde guardar las fotos hechas por esta app
-        File imagesFolder = new File(
-                Environment.getExternalStorageDirectory(), "GestoFotos");
-        imagesFolder.mkdirs();
-
-        //establecemos el nombre de la imagen y le decimos donde se guardara
-        String name = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        image = new File(imagesFolder, "IMG_" + name + ".jpg");
-        Uri uriImage = Uri.fromFile(image);
-
-        //almacenamos la imagen en la memoria interna
-        camera.putExtra(MediaStore.EXTRA_OUTPUT, uriImage);
-        if (camera.resolveActivity(getPackageManager()) != null) {
-            //lanzamos la aplicacion de la camara
-            startActivityForResult(camera, PETICION);
-        }
-    }
-
-    /**
-     * Metodo con el que comprobamos que se haya realizado la foto, y de ser asi, la almacenamos en
-     * la memoria y, finalmente la mostramos por pantalla
-     *
-     * @param requestCode
-     * @param resultCode
-     * @param data
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Bitmap newBM;
-        if (requestCode == PETICION && resultCode == Activity.RESULT_OK) {
-            Bitmap btmap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()
-                    + "/GestoFotos/" + image.getName());
-
-            newBM = scale(btmap);
-            img.setImageBitmap(newBM);
-        }
-    }
-
-    /**
-     * Metodo con el que escalamos la foto tomada para su posterior muestra
-     *
-     * @param bt
-     * @return
-     */
-    protected Bitmap scale(Bitmap bt) {
-        Bitmap btmap = Bitmap.createScaledBitmap(bt, 390, 650, false);
-        int ancho = btmap.getWidth();
-        int alto = btmap.getHeight();
-        int newAncho = 390;
-        int newAlto = 650;
-
-        //calculamos la escala
-        float escalaAncho = ((float) newAncho) / ancho;
-        float escalaAlto = ((float) newAlto) / alto;
-
-        //creamos una matriz para la conversion de la escala y reescalamos
-        Matrix matriz = new Matrix();
-        matriz.postScale(escalaAlto, escalaAncho);
-        Bitmap reescalarBitMap = Bitmap.createBitmap(btmap, 0, 0, ancho, alto, matriz, true);
-
-        return reescalarBitMap;
-    }
-//    /**
-//     * Metodo que se encarga de, tras tres segundos, tomar una foto
-//     */
-//    public void temporizador() {
-//        Runnable r = new Runnable() {
-//            @Override
-//            public void run() {
-//
-//                tomarFoto();
-//                Log.d(TomarFotoActivity.class.getSimpleName(), "realizando foto");
-//            }
-//        };
-//        ScheduledThreadPoolExecutor temper = new ScheduledThreadPoolExecutor(1);
-//        temper.schedule(r, 3, TimeUnit.SECONDS);
-//    }
 
     @Override
     public void onBackPressed() {
+        finish();
         Intent i = new Intent(this, ConfirmarPatronActivity.class);
         startActivity(i);
     }

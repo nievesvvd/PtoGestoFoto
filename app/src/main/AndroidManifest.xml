@@ -18,9 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".ConfirmarPatronActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,17 +28,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ConfirmarPatronActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme" />
-        <activity
             android:name=".EstablecerPatronActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".TomarFotoActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>
