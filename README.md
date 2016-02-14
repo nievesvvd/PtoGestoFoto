@@ -6,7 +6,7 @@
 * Nieves Victoria Velásquez Díaz
 
 ### Duración de la práctica.
-Desde 15-Ene-2016 hasta 15-Feb-2016
+Desde 12-Ene-2016 hasta 15-Feb-2016
 
 ### Breve descripción de la practica.
 Para la realizacion de esta práctica, se programarán cinco aplicaciones android diferentes de forma que, cada una hace uso de los distintos sensores que posee el dispositivo android.
@@ -39,7 +39,7 @@ Para la primera parte de la practica, la asociada con el patron, nos hemos basad
 	* **public void onBackPressed():** metodo con el que salimos de la aplicacion en caso de que pulsemos el boton de "atrás".
 
 * Los metodos implementados en la clase **Utility()** han sido:
-	* ** public static void saveToPreferences(Context context, String lockPattern):** a este metodo le pasamos el contecto actual y el patron ya tansformado a string. Con esto, creamos una variable de la clase *SharedPreferences*, le indicamos que es de tipo patron y la editamos guardando  como **KEY_LOCK_PATTERN** el patron.
+	* **public static void saveToPreferences(Context context, String lockPattern):** a este metodo le pasamos el contecto actual y el patron ya tansformado a string. Con esto, creamos una variable de la clase *SharedPreferences*, le indicamos que es de tipo patron y la editamos guardando  como **KEY_LOCK_PATTERN** el patron.
 	
 	* **public static String loadFromPreferences(Context context):** metodo al que, dado el contexto, obtenemos el patron almacenado en el metodo anterior mediante el objeto de la clase *SharedPreferences*.
 	
