@@ -55,6 +55,12 @@ public class Utility {
         return sp.getString(KEY_LOCK_PATTERN, null);
     }
 
+    /**
+     * Metodo con el que vemos si ya hay o no un patron establecido
+     *
+     * @param context
+     * @return
+     */
     public static boolean isPatternSetted(Context context) {
         Log.d(TAG, "Comprobando patron:");
         SharedPreferences sp = context.getSharedPreferences(PREFERENCES_LOCK_PATTERN, Context.MODE_PRIVATE);

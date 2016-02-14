@@ -53,7 +53,6 @@ public class ConfirmarPatronActivity extends me.zhanghai.android.patternlock.Con
      */
     @Override
     protected boolean isPatternCorrect(List<PatternView.Cell> pattern) {
-        //cargamos el patron almacenado y vemos si es igual al introducido
         String patternSha1 = Utility.loadFromPreferences(this);
         return TextUtils.equals(PatternUtils.patternToSha1String(pattern), patternSha1);
     }
