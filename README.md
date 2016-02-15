@@ -45,4 +45,5 @@ Para la primera parte de la practica, la asociada con el patron, nos hemos basad
 	
 	* **public static boolean isPatternSetted(Context context):** con este metodo vemos si hay algo almacenado en la variable de la clase *SharedPreferences*, de ser asi devolvera *true*, si no, devolvera *false*.
 
-
+### Bibliografía.
+[Libreria del patron](https://github.com/DreaminginCodeZH/PatternLock)
