@@ -20,8 +20,6 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.nieves.camera2basics.CameraActivity;
-
 import java.util.List;
 
 import me.zhanghai.android.patternlock.PatternUtils;
@@ -49,27 +47,13 @@ public class ConfirmarPatronActivity extends me.zhanghai.android.patternlock.Con
     /**
      * Metodo en el que comprobamos que el patron introducido por el usuario es correcto
      *
-     * @param pattern
-     * @return
+     * @param pattern recibe el patron establecido por el usuario
+     * @return devolvera true si el patron coincide con el almacenado y false en caso contrario
      */
     @Override
     protected boolean isPatternCorrect(List<PatternView.Cell> pattern) {
         String patternSha1 = Utility.loadFromPreferences(this);
         return TextUtils.equals(PatternUtils.patternToSha1String(pattern), patternSha1);
-    }
-
-    /**
-     * Metodo en el que, una vez confirmado que el patron es correcto llamamos al activity
-     * de la camara para tomar la foto
-     */
-    @Override
-    protected void onConfirmed() {
-        Log.d(TAG, "Patrón ya seteado");
-        super.onConfirmed();
-        //Llamamos al acivity de la camara
-        Intent i = new Intent(this, CameraActivity.class);
-//        Intent i = new Intent(this, TomarFotoActivity.class);
-        startActivity(i);
     }
 
     /**
@@ -82,6 +66,9 @@ public class ConfirmarPatronActivity extends me.zhanghai.android.patternlock.Con
         startActivity(i);
     }
 
+    /**
+     * Metodo con el que le indicamos qué hacer en caso de pulsar el boton de "atras"
+     */
     @Override
     public void onBackPressed() {
         super.onBackPressed();

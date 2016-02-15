@@ -11,16 +11,16 @@ Desde 12-Ene-2016 hasta 15-Feb-2016
 ### Breve descripción de la practica.
 Para la realizacion de esta práctica, se programarán cinco aplicaciones android diferentes de forma que, cada una hace uso de los distintos sensores que posee el dispositivo android.
 ### Descripción del problema.
-Esta aplicación consiste en, una vez se ha realizado un patrón específico, el dispositivo lo reconocerá y se reproducirá un sonido determinado. En este caso el patrón de movimiento consiste en mover el dispositivo rápidamente en el eje X, como si de un látigo se tratase.
+Esta aplicación consiste en, una vez se ha realizado un patrón específico, el dispositivo lo reconocerá y se lanzará la cámara de andoird haciendo una foto.
 ###Clases.
 Para la primera parte de la practica, la asociada con el patron, nos hemos basado en la libreria del usuario de GitHub [DreaminginCodeZH](https://github.com/DreaminginCodeZH/PatternLock).
 
-* **EstablecerPatronAcotivity:** En esta primera clase nos encargamos de establecer un nuevo patron, ya sea por que no habia uno establecido previamente, o porque queramos cambiarlo por uno nuevo. Una vez establecido, procederemos a llamar a la clase **ConfirmarPatronActivity**que es la que se encargara de asegurar los patrones.
+* **EstablecerPatronAcotivity:** En esta primera clase nos encargamos de establecer un nuevo patron, ya sea por que no habia uno establecido previamente, o porque queramos cambiarlo por uno nuevo. Una vez establecido, procederemos a llamar a la clase **ConfirmarPatronActivity:** que es la que se encargara de asegurar los patrones.
 
 * **ConfirmarPatronActivity:** En esta clase nos encargamos de comprobar el patron previamente establecido con el introducido por el usuario y, desde este activity, llamamos a la segunda parte de la práctica, que es la asociada con la cámara. Desde esta clase, también podemos volver a la anterior en caso de que queramos cambiar el patron.
 * **Utility:** Esta clase la usamos como clase puente entre **ConfirmarPatronActivity** y **EstablecerPatronActivity** para poder trabajar con el patron establecido ya sea para consultarlo como para almacenarlo o modificarlo.
 
-* **TomarFotoActivity:**
+* **MainActivity:** En esta clase nos encargamos de gestionar a qué activity vamos a llamar antes dependiendo de si ya hay o no un patrón seteado, y tras esto, si el patron es correcto llamamos a la cámara basada en la libreria del usuario de GitHub [Commonsguy](https://github.com/commonsguy/cwac-cam2)
 
 ###Métodos.
 * El metodo implementado en la clase **EstablecerPatronActivity()** ha sido:
@@ -28,7 +28,7 @@ Para la primera parte de la practica, la asociada con el patron, nos hemos basad
 	* **protected void onSetPattern(List < PatternView.Cell \> pattern):** En este método pasamos el patrón obtenido y lo tranformamos en string usando el metodo de la libreria que estamos utilizando: **patternToSha1String()**, tras esto, lo almacenamos y finalmente damos paso al activity **ConfirmarPatronActivity.**
 
 *  Los metodos implementados en la clase **ConfirmarPatronActivity()** han sido:
-	*	**protected void onStart():** en este método vemos: si no hay un patrón almacenado, llamamos a **EstablecerPatronActivity()** para crear uno nuevo, y si no, mostramos un mensaje indicando que ya hay un patrón.
+	*	**protected void onStart():** en este método vemos si  hay un patrón almacenado, si no lo hay, llamamos a **EstablecerPatronActivity()** para crear uno nuevo.
 
 	* **protected boolean isPatternCorrect(List < PatternView.Cell \> pattern):** En este metodo nos encargamos de cargar el patron que ya teniamos guardado y vemos si el introducido es igual. Devolveremos *true* si es correcto y *false* si no.
 	
@@ -45,5 +45,13 @@ Para la primera parte de la practica, la asociada con el patron, nos hemos basad
 	
 	* **public static boolean isPatternSetted(Context context):** con este metodo vemos si hay algo almacenado en la variable de la clase *SharedPreferences*, de ser asi devolvera *true*, si no, devolvera *false*.
 
-### Bibliografía.
-[Libreria del patron](https://github.com/DreaminginCodeZH/PatternLock)
+* Los metodos implementados en la clase **MainActivity()** han sido:
+	* **protected void onCreate(Bundle savedInstanceState):** contructor del activity, en el una vez establecida la vista, vemos si ya se ha establecido un patron, en caso afirmativo llamará al método *ConfirmarPatronActivity*, si no, iniciará el activity *EstablecerPatronActivity*, para establecer el patrón deseado.
+	
+	* **protected void onActivityResult(int requestCode, int resultCode, Intent data):** con este método vemos: si se ha establecido el patrón y el introducido por el usuario es correcto entonces creamos la carpeta donde se van a almacenar las fotos que se tomen y posteriormente creamos el fichero de la foto y por nombre tendra la fecha del dia y la hora en la que se tome de forma que cada foto tiene su propio nombre. Una vez todo listo se llama al *CameraActivity.IntentBuilder* es decir al constructor del builder y le pasamos mediante .skipConfirm().facing(CameraActivity.Facing.BACK).to(uriImage).debug(): como va a funcionar, es decir, donde se va a almacenar la imagen (.to(uriImage)), que cámara vamos a usar,(facing(CameraActivity.Facing.BACK)) en este caso la posterior, si se va a mostrar informacion extra de depuracion (.debug()) y finalmente usaremos .build() para que construya el intent correctamente. Tras esto inicia la actividad para que se muestre la vista de la camara y se pueda proceder a tomar la foto. Finalmente, vemos si la foto ha sido realizada correctamente, en caso de ser así aparece un Toast en la parte inferior de la pantalla indicando que la foto se ha realizado con exito y se llamara al activity de confirmar el patron de nuevo, reiniciando la aplicación de forma que habra que volver a meter un patrón para poder realizar la foto de nuevo.
+	
+###Bibliografía.
+* [Libreria del patron](https://github.com/DreaminginCodeZH/PatternLock)
+* [Como almacenar las fotos en la memoria interna](http://www.jc-mouse.net/android/tomar-fotos-con-la-camara-y-guardar-en-la-sdcard)
+* [Almacenamiento en la memoria interna y creacion de carpetas](http://stackoverflow.com/questions/25467007/unable-to-decode-stream-java-io-filenotfoundexception-storage-emulated-0-open-f)
+* [Libreria de la camara](https://github.com/commonsguy/cwac-cam2)

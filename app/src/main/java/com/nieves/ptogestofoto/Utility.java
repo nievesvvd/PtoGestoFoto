@@ -35,8 +35,8 @@ public class Utility {
      * Metodo al que, dado el contexto y un patron convertido en string, lo almacenamos para
      * su posterior uso
      *
-     * @param context
-     * @param lockPattern
+     * @param context     contexto en el que se encuentra la aplicacion
+     * @param lockPattern strign donde le pasamos al metodo el patron establecido
      */
     public static void saveToPreferences(Context context, String lockPattern) {
         SharedPreferences sp = context.getSharedPreferences(PREFERENCES_LOCK_PATTERN, Context.MODE_PRIVATE);
@@ -48,8 +48,8 @@ public class Utility {
     /**
      * Metodo al que, dado el contexto, nos carga el patron almacenado previmente
      *
-     * @param context
-     * @return
+     * @param context contexto en el que se encuentra la aplicacion
+     * @return devuelve el patron previamente establecido y ya almacenado
      */
     public static String loadFromPreferences(Context context) {
         SharedPreferences sp = context.getSharedPreferences(PREFERENCES_LOCK_PATTERN, Context.MODE_PRIVATE);
@@ -59,13 +59,13 @@ public class Utility {
     /**
      * Metodo con el que vemos si ya hay o no un patron establecido
      *
-     * @param context
-     * @return
+     * @param context contexto en el que se encuentra la aplicacion
+     * @return devuelve true si hay ya un patron o false si no lo hay
      */
     public static boolean isPatternSetted(Context context) {
         Log.d(TAG, "Comprobando patron:");
         SharedPreferences sp = context.getSharedPreferences(PREFERENCES_LOCK_PATTERN, Context.MODE_PRIVATE);
-        Log.d(TAG, sp != null ? "Ya hay un patron" : "No hay patron");
-        return sp != null;
+        Log.d(TAG, sp.getString(KEY_LOCK_PATTERN, null) != null ? "Ya hay un patron" : "No hay patron");
+        return sp.getString(KEY_LOCK_PATTERN, null) != null;
     }
 }
