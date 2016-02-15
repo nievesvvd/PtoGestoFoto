@@ -28,6 +28,12 @@ import me.zhanghai.android.patternlock.PatternView;
  * Clase en la que estableceremos lo necesario para poder leer y almacenar un patron
  */
 public class EstablecerPatronActivity extends me.zhanghai.android.patternlock.SetPatternActivity {
+    /**
+     * Con este metodo una vez recibimos el patron, lo almacenamos y lanzamos el activity con el que
+     * confirmar el patron
+     *
+     * @param pattern recibe el patron establecido por el usuario
+     */
     @Override
     protected void onSetPattern(List<PatternView.Cell> pattern) {
         //pasamos el pattern a string
